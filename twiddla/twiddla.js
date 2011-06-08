@@ -1,6 +1,9 @@
-document.getElementById('divSideband').style.display = '';
+window.onload = function() {
+  document.getElementById('divSideband').style.display = '';
 
-sendSideband = function(type) {
-  document.getElementById('txtChat').value = ':: ' + type + ' ::'; sendChat();
-}
+  sendSideband = function(type) {
+    document.getElementById('txtChat').value = ':: ' + type + ' ::';
+    sendChat();
+  };
+};
 
