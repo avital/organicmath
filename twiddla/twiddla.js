@@ -2,9 +2,15 @@
 setTimeout(function() {
   document.getElementById('divSideband').style.display = '';
 
-  sendSideband = function(type) {
-    document.getElementById('txtChat').value = ':: ' + type + ' ::';
+  sendMessage = function(message) {
+    var original_message = document.getElementById('txtChat').value;
+    document.getElementById('txtChat').value = message;
     sendChat();
+    document.getElementById('txtChat').value = original_message;
+  };
+
+  sendSideband = function(type) {
+    sendMessage(':: ' + type + ' ::');
   };
 }, 5000);
 
@@ -16,10 +22,10 @@ setTimeout(function() {
     if (text.substring(0, 2) === '@@') {
       var command = text.substring(2);
       window[command](user);
+    } else {
+      originalAppendChatBox(
+          container, user, text, allowHTML, includeUserIcon, className);
     }
-
-    originalAppendChatBox(
-        container, user, text, allowHTML, includeUserIcon, className);
   };
 
   originalAppendUserRow = TChat.AppendUserRow;
@@ -32,6 +38,20 @@ setTimeout(function() {
       user_div.style.backgroundColor = '';
     }
   };
+
+  old_chat_text = '';
+
+  setInterval(function() {
+    chat_text = document.getElementById('txtChat').value;    
+    if (old_chat_text === '' && chat_text !== '') {
+      sendMessage('@@starttyping');      
+    }
+    if (old_chat_text !== '' && chat_text === '') {
+      sendMessage('@@stoptyping');
+    }
+
+    old_chat_text = chat_text;
+  }, 1000);
 }, 8000);
 
 starttyping = function(user) {
