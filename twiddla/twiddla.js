@@ -44,22 +44,22 @@ setTimeout(function() {
   setInterval(function() {
     chat_text = document.getElementById('txtChat').value;    
     if (old_chat_text === '' && chat_text !== '') {
-      sendMessage('@@starttyping');      
+      sendMessage('@@startTyping');      
     }
     if (old_chat_text !== '' && chat_text === '') {
-      sendMessage('@@stoptyping');
+      sendMessage('@@stopTyping');
     }
 
     old_chat_text = chat_text;
   }, 1000);
 }, 8000);
 
-starttyping = function(user) {
+startTyping = function(user) {
   user.is_typing = true;
   RefreshUsers();
 };
 
-stoptyping = function(user) {
+stopTyping = function(user) {
   user.is_typing = false;
   RefreshUsers();
 };
