@@ -31,7 +31,8 @@ cleanProtocol = function() {
 
 // TODO: Eliminate setTimeout!
 setTimeout(function() {
-  cleanProtocol();
+// If we call this is works but then you can't see any new chat messages
+//  cleanProtocol();
 
   originalAppendChatBox = TChat.AppendChatBox;
   TChat.AppendChatBox = 
