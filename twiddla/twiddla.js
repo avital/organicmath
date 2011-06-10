@@ -14,8 +14,25 @@ setTimeout(function() {
   };
 }, 5000);
 
+cleanProtocol = function() {
+  document.getElementById('divChat').innerHTML = 
+      document.getElementById('divChat').innerHTML.replace(
+          /@@stopTyping\<br\>/g, '').replace(/@@startTyping\<br\>/g, '');
+};
+
+
+
+/*
+<div class="chatmessage">@@startTyping<br>@@stopTyping<br>@@startTyping<br>@@stopTyping<br>sdfd<br>a<br>b<br>c<br>@@startTyping<br>dsadsa<br>@@stopTyping<br>asfd<br>@@startTyping<br>mkl<br>@@stopTyping<br>jkljkl<br>@@startTyping<br>jl<br>@@stopTyping<br>jiojio<br>jo</div>
+
+
+*/
+
+
 // TODO: Eliminate setTimeout!
 setTimeout(function() {
+  cleanProtocol();
+
   originalAppendChatBox = TChat.AppendChatBox;
   TChat.AppendChatBox = 
       function(container, user, text, allowHTML, includeUserIcon, className) {
