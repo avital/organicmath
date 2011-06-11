@@ -1,4 +1,4 @@
-alert('This is being worked-on right now. It may have bugs.');
+// alert('This is being worked-on right now. It may have bugs.');
 
 // TODO: Find the proper event to fire on rather than use setTimeout
 setTimeout(function() {
@@ -17,8 +17,7 @@ setTimeout(function() {
 }, 5000);
 
 cleanProtocol = function() {
-  document.getElementById('divChat').innerHTML = 
-      document.getElementById('divChat').innerHTML
+  divChat.innerHTML = divChat.innerHTML
           .replace(/@@stopTyping\<br\>/g, '')
           .replace(/@@stopTyping\<\/div\>/g, '</div>')
           .replace(/@@startTyping\<br\>/g, '');
@@ -26,17 +25,10 @@ cleanProtocol = function() {
 
 
 
-/*
-<div class="chatmessage">@@startTyping<br>@@stopTyping<br>@@startTyping<br>@@stopTyping<br>sdfd<br>a<br>b<br>c<br>@@startTyping<br>dsadsa<br>@@stopTyping<br>asfd<br>@@startTyping<br>mkl<br>@@stopTyping<br>jkljkl<br>@@startTyping<br>jl<br>@@stopTyping<br>jiojio<br>jo</div>
-
-
-*/
-
-
 // TODO: Eliminate setTimeout!
 setTimeout(function() {
 // If we call this is works but then you can't see any new chat messages
-  cleanProtocol();
+//  cleanProtocol();
 
   originalAppendChatBox = TChat.AppendChatBox;
   TChat.AppendChatBox = 
