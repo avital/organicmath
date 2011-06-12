@@ -4,8 +4,8 @@
 // Not sure what the "correct" way to hook into after twiddla is
 // initialized (poking through their code shows some setTimeouts)
 // but they eval the response from the first XHR returning the initial
-// calls to populate the room and log. So we grab the first instance
-// of eval to initialize organicmath.
+// calls to populate the room and log. So we intercept the first call
+// to eval and initialize organicmath just before.
 organicmath_initialized = false;
 oldEval = eval;
 eval = function(expr) {
