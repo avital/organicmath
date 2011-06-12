@@ -12,14 +12,10 @@ eval = function(expr) {
   if (!organicmath_initialized) {
     initOrganicmath();
     organicmath_initialized = true;
+    eval = oldEval;
   }
   oldEval(expr);
 };
-
-// So that chrome dev console works
-setTimeout(function() {
-  eval = oldEval;
-}, 8000);
 
 initOrganicmath = function() {
   document.getElementById('divSideband').style.display = '';
