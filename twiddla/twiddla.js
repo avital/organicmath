@@ -1,3 +1,6 @@
+// UNCOMMENT THE FOLLOWING LINE IF YOU ARE DEPLOYING TEST VERSIONS.
+// alert("We are working on this now. It may contain bugs");
+
 // Not sure what the "correct" way to hook into after twiddla is
 // initialized (poking through their code shows some setTimeouts)
 // but they eval the response from the first XHR returning the initial
@@ -7,13 +10,13 @@ organicmath_initialized = false;
 oldEval = eval;
 eval = function(expr) {
   if (!organicmath_initialized) {
-    organicmath_initialize();
+    initOrganicmath();
     organicmath_initialized = true;
   }
   oldEval(expr);
 };
 
-organicmath_initialize = function() {
+initOrganicmath = function() {
   document.getElementById('divSideband').style.display = '';
 
   sendMessage = function(message) {
