@@ -1,7 +1,21 @@
-// alert('This is being worked-on right now. It may have bugs.');
+alert('This is being worked-on right now. It may have bugs.');
 
-// TODO: Find the proper event to fire on rather than use setTimeout
-setTimeout(function() {
+// Not sure what the "correct" way to hook into after twiddla is
+// initialized (poking through their code shows some setTimeouts)
+// but they eval the response from the first XHR returning the initial
+// calls to populate the room and log. So we grab the first instance
+// of eval to initialize organicmath.
+organicmath_initialized = false;
+oldEval = eval;
+eval = function(expr) {
+  if (!organicmath_initialized) {
+    organicmath_initialize();
+    organicmath_initialized = true;
+  }
+  oldEval(expr);
+};
+
+organicmath_initialize = function() {
   document.getElementById('divSideband').style.display = '';
 
   sendMessage = function(message) {
@@ -14,21 +28,6 @@ setTimeout(function() {
   sendSideband = function(type) {
     sendMessage(':: ' + type + ' ::');
   };
-}, 5000);
-
-cleanProtocol = function() {
-  divChat.innerHTML = divChat.innerHTML
-          .replace(/@@stopTyping\<br\>/g, '')
-          .replace(/@@stopTyping\<\/div\>/g, '</div>')
-          .replace(/@@startTyping\<br\>/g, '');
-};
-
-
-
-// TODO: Eliminate setTimeout!
-setTimeout(function() {
-// If we call this is works but then you can't see any new chat messages
-//  cleanProtocol();
 
   originalAppendChatBox = TChat.AppendChatBox;
   TChat.AppendChatBox = 
@@ -37,6 +36,7 @@ setTimeout(function() {
       var command = text.substring(2);
       window[command](user);
     } else {
+      debugger;
       originalAppendChatBox(
           container, user, text, allowHTML, includeUserIcon, className);
     }
@@ -66,7 +66,7 @@ setTimeout(function() {
 
     old_chat_text = chat_text;
   }, 1000);
-}, 8000);
+};
 
 startTyping = function(user) {
   user.is_typing = true;
