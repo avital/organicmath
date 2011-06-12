@@ -37,7 +37,6 @@ initOrganicmath = function() {
       var command = text.substring(2);
       window[command](user);
     } else {
-      debugger;
       originalAppendChatBox(
           container, user, text, allowHTML, includeUserIcon, className);
     }
