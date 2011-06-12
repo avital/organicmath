@@ -16,6 +16,11 @@ eval = function(expr) {
   oldEval(expr);
 };
 
+// So that chrome dev console works
+setTimeout(function() {
+  eval = oldEval;
+}, 8000);
+
 initOrganicmath = function() {
   document.getElementById('divSideband').style.display = '';
 
@@ -37,8 +42,18 @@ initOrganicmath = function() {
       var command = text.substring(2);
       window[command](user);
     } else {
+      // Leave scrollbar in place if you are scrolled up.
+      var oldScrollTop = null;
+      if (divChat.scrollHeight - divChat.scrollTop !== 200 /*#MagicConstant*/) {
+        oldScrollTop = divChat.scrollTop
+      }
+
       originalAppendChatBox(
           container, user, text, allowHTML, includeUserIcon, className);
+
+      if (oldScrollTop) {
+        divChat.scrollTop = oldScrollTop;
+      }
     }
   };
 
