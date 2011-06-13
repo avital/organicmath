@@ -18,7 +18,14 @@ eval = function(expr) {
 };
 
 initOrganicmath = function() {
+  // Hand, Agree, Thank, Laugh are hidden by default, so show them...
   document.getElementById('divSideband').style.display = '';
+  
+  // change the thank icon to read 'Thinking', and send appropriate message
+  var thankEl = document.getElementById('divSideband').children[2];
+  thankEl.onclick = function(){sendSideband('thinking')};
+  thankEl.innerHTML = thankEl.innerHTML.replace('Thank','Thinking');
+  thankEl.style.setProperty("width", "75px");
 
   sendMessage = function(message) {
     var original_message = document.getElementById('txtChat').value;
