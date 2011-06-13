@@ -1,5 +1,5 @@
 // UNCOMMENT THE FOLLOWING LINE IF YOU ARE DEPLOYING TEST VERSIONS.
-alert("We are working on this now. It may contain bugs");
+// alert("We are working on this now. It may contain bugs");
 
 // Not sure what the "correct" way to hook into after twiddla is
 // initialized (poking through their code shows some setTimeouts)
