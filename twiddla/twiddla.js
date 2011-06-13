@@ -1,5 +1,5 @@
 // UNCOMMENT THE FOLLOWING LINE IF YOU ARE DEPLOYING TEST VERSIONS.
-// alert("We are working on this now. It may contain bugs");
+alert("We are working on this now. It may contain bugs");
 
 // Not sure what the "correct" way to hook into after twiddla is
 // initialized (poking through their code shows some setTimeouts)
@@ -35,6 +35,7 @@ initOrganicmath = function() {
   TChat.AppendChatBox = 
       function(container, user, text, allowHTML, includeUserIcon, className) {
     if (text.substring(0, 2) === '@@') {
+      // allow special operations (IE: for the typing indicator)
       var command = text.substring(2);
       window[command](user);
     } else {
@@ -76,7 +77,7 @@ initOrganicmath = function() {
     }
 
     old_chat_text = chat_text;
-  }, 1000);
+  }, 50);
 };
 
 startTyping = function(user) {
