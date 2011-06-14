@@ -20,12 +20,12 @@ eval = function(expr) {
 initOrganicmath = function() {
   // Hand, Agree, Thank, Laugh are hidden by default, so show them...
   document.getElementById('divSideband').style.display = '';
-  
+
   // change the thank icon to read 'Thinking', and send appropriate message
   var thankEl = document.getElementById('divSideband').children[2];
   thankEl.onclick = function(){sendSideband('thinking')};
   thankEl.innerHTML = thankEl.innerHTML.replace('Thank','Thinking');
-  thankEl.style.setProperty("width", "75px");
+  thankEl.style.setProperty("width", "75px", null);
 
   sendMessage = function(message) {
     var original_message = document.getElementById('txtChat').value;
@@ -39,7 +39,7 @@ initOrganicmath = function() {
   };
 
   originalAppendChatBox = TChat.AppendChatBox;
-  TChat.AppendChatBox = 
+  TChat.AppendChatBox =
       function(container, user, text, allowHTML, includeUserIcon, className) {
     if (text.substring(0, 2) === '@@') {
       // allow special operations (IE: for the typing indicator)
@@ -75,9 +75,9 @@ initOrganicmath = function() {
   old_chat_text = '';
 
   setInterval(function() {
-    chat_text = document.getElementById('txtChat').value;    
+    chat_text = document.getElementById('txtChat').value;
     if (old_chat_text === '' && chat_text !== '') {
-      sendMessage('@@startTyping');      
+      sendMessage('@@startTyping');
     }
     if (old_chat_text !== '' && chat_text === '') {
       sendMessage('@@stopTyping');
