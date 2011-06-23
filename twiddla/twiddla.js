@@ -48,8 +48,9 @@ initOrganicmath = function() {
     } else {
       // Leave scrollbar in place if you are scrolled up.
       var oldScrollTop = null;
-      if (divChat.scrollHeight - divChat.scrollTop !== 200 /*#MagicConstant*/) {
-        oldScrollTop = divChat.scrollTop
+
+      if (divChat.scrollHeight - divChat.scrollTop > 220 /*#MagicConstant*/) {
+        oldScrollTop = divChat.scrollTop;
       }
 
       originalAppendChatBox(
@@ -61,26 +62,43 @@ initOrganicmath = function() {
     }
   };
 
+  makeLinkSane = function(element) {
+    element.onclick = null;
+    element.target = '_blank';
+  }
+
+  normalize = function() {
+	var container = divChat;
+    var elements = container.getElementsByTagName('a');
+    for (var i = 0; i < elements.length; i++) {
+  	  var element = elements[i];
+
+      if (element.innerHTML === '- load as background image' ||
+          element.innerHTML === '- view original') {
+        element.innerHTML = '';
+      } else if (element.className === 'snaplink') {
+		makeLinkSane(element);
+	  } else if (element.parentNode.className === 'chatmessage') {
+		makeLinkSane(element);
+		// TODO: Do this in CSS (for performance)
+		element.parentNode.style.overflowX = 'hidden';
+      }
+	}
+  };
+
   originalPostProcessChatMessage = TChat.PostProcessChatMessage;
   TChat.PostProcessChatMessage = function(container) {
     originalPostProcessChatMessage(container);
-    container.innerHTML = container.innerHTML.replace(/onclick=\"sendLoad.*\"/g, '').replace('<a href', '<a target="_blank" href');
+    normalize();
   };
 
   originalAppendSnapshotBox = TChat.AppendSnapshotBox;
   TChat.AppendSnapshotBox = function(container, user, actionID, thumbUrl, snapshotName) {
 	originalAppendSnapshotBox(container, user, actionID, thumbUrl, snapshotName);
-	container.innerHTML = container.innerHTML.replace('- load as background image', '').replace('- view original', '');
-
-    var elements = container.getElementsByTagName('a');
-    for (var i = 0; i < elements.length; i++) {
-	  var element = elements[i];
-	  if (element.className === 'snaplink') {
-	    element.onclick = null;
-	    element.target = '_blank';
-  	  }
-    };
+    normalize();	
   };
+
+  normalize();
 
   originalAppendUserRow = TChat.AppendUserRow;
   TChat.AppendUserRow = function(container, user) {
