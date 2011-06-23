@@ -64,7 +64,22 @@ initOrganicmath = function() {
   originalPostProcessChatMessage = TChat.PostProcessChatMessage;
   TChat.PostProcessChatMessage = function(container) {
     originalPostProcessChatMessage(container);
-    container.innerHTML = container.innerHTML.replace(/onclick=\".*\"/g, '').replace('<a href', '<a target="_blank" href');
+    container.innerHTML = container.innerHTML.replace(/onclick=\"sendLoad.*\"/g, '').replace('<a href', '<a target="_blank" href');
+  };
+
+  originalAppendSnapshotBox = TChat.AppendSnapshotBox;
+  TChat.AppendSnapshotBox = function(container, user, actionID, thumbUrl, snapshotName) {
+	originalAppendSnapshotBox(container, user, actionID, thumbUrl, snapshotName);
+	container.innerHTML = container.innerHTML.replace('- load as background image', '').replace('- view original', '');
+
+    var elements = container.getElementsByTagName('a');
+    for (var i = 0; i < elements.length; i++) {
+	  var element = elements[i];
+	  if (element.className === 'snaplink') {
+	    element.onclick = null;
+	    element.target = '_blank';
+  	  }
+    };
   };
 
   originalAppendUserRow = TChat.AppendUserRow;
