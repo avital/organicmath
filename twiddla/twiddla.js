@@ -61,6 +61,12 @@ initOrganicmath = function() {
     }
   };
 
+  originalPostProcessChatMessage = TChat.PostProcessChatMessage;
+  TChat.PostProcessChatMessage = function(container) {
+    originalPostProcessChatMessage(container);
+    container.innerHTML = container.innerHTML.replace(/onclick=\".*\"/g, '').replace('<a href', '<a target="_blank" href');
+  };
+
   originalAppendUserRow = TChat.AppendUserRow;
   TChat.AppendUserRow = function(container, user) {
     originalAppendUserRow(container, user);
