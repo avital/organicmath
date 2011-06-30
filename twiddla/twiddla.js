@@ -1,5 +1,5 @@
 // UNCOMMENT THE FOLLOWING LINE IF YOU ARE DEPLOYING TEST VERSIONS.
-// alert("We are working on this now. It may contain bugs");
+alert("We are working on this now. It may have bugs.");
 
 // Not sure what the "correct" way to hook into after twiddla is
 // initialized (poking through their code shows some setTimeouts)
@@ -65,7 +65,7 @@ initOrganicmath = function() {
   makeLinkSane = function(element) {
     element.onclick = null;
     element.target = '_blank';
-  }
+  };
 
   normalize = function() {
 	var container = divChat;
@@ -73,9 +73,10 @@ initOrganicmath = function() {
     for (var i = 0; i < elements.length; i++) {
   	  var element = elements[i];
 
-      if (element.innerHTML === '- load as background image' ||
-          element.innerHTML === '- view original') {
+      if (element.innerHTML === '- load as background image') {
         element.innerHTML = '';
+      } else if (element.innerHTML === '- view original') {
+        element.innerHTML = '- revert to this image (will clear board)';
       } else if (element.className === 'snaplink') {
 		makeLinkSane(element);
 	  } else if (element.parentNode.className === 'chatmessage') {
