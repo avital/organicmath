@@ -1,5 +1,5 @@
 // UNCOMMENT THE FOLLOWING LINE IF YOU ARE DEPLOYING TEST VERSIONS.
-alert("We are working on this now. It may have bugs.");
+// alert("We are working on this now. It may have bugs.");
 
 // Not sure what the "correct" way to hook into after twiddla is
 // initialized (poking through their code shows some setTimeouts)
@@ -76,7 +76,7 @@ initOrganicmath = function() {
       if (element.innerHTML === '- load as background image') {
         element.innerHTML = '';
       } else if (element.innerHTML === '- view original') {
-        element.innerHTML = '- revert to this image (will clear board)';
+        element.innerHTML = '- revert to this image (will clear whiteboard)';
       } else if (element.className === 'snaplink') {
 		makeLinkSane(element);
 	  } else if (element.parentNode.className === 'chatmessage') {
@@ -112,8 +112,18 @@ initOrganicmath = function() {
     }
   };
 
-  old_chat_text = '';
+/* #FastSave
+  document.getElementById('framePop').contentWindow.location 
+    = '/AddIns/SnapshotPanel.aspx?sessionID=565705';
+  upload_callback = function() {};
+  openPop = function() {
+    document.getElementById('framePop').contentWindow.document
+        .getElementById('bugForm').submit();
+  };
+  MediaTab_init = function() {};
+*/
 
+  old_chat_text = '';
   setInterval(function() {
     chat_text = document.getElementById('txtChat').value;
     if (old_chat_text === '' && chat_text !== '') {
