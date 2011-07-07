@@ -1,5 +1,5 @@
 // UNCOMMENT THE FOLLOWING LINE IF YOU ARE DEPLOYING TEST VERSIONS.
-// alert("We are working on this now. It may have bugs.");
+alert("We are working on this now. It may have bugs.");
 
 // Not sure what the "correct" way to hook into after twiddla is
 // initialized (poking through their code shows some setTimeouts)
@@ -27,6 +27,12 @@ initOrganicmath = function() {
   thankEl.innerHTML = thankEl.innerHTML.replace('Thank','Thinking');
   thankEl.style.setProperty("width", "75px", null);
 
+  // change the thank icon to read 'Thinking', and send appropriate message
+  var awayEl = document.getElementById('divSideband').children[3];
+  awayEl.onclick = function(){sendSideband('away')};
+  awayEl.innerHTML = awayEl.innerHTML.replace('Laugh', 'Away');
+//  awayEl.style.setProperty("width", "75px", null);
+
   sendMessage = function(message) {
     var original_message = document.getElementById('txtChat').value;
     document.getElementById('txtChat').value = message;
@@ -35,7 +41,21 @@ initOrganicmath = function() {
   };
 
   sendSideband = function(type) {
-    sendMessage(':: ' + type + ' ::');
+    if (type === 'away') {
+      setTimeout(function() {
+        sendMessage('@@away');
+      }, 200); // To allow you to move the mouse a little right after the click
+    }
+    else {
+      sendMessage(':: ' + type + ' ::');
+    }
+  };
+
+  document.onmousemove = function() {
+    if (TChat.currentUser.is_away) {
+      sendMessage('@@back');
+      TChat.currentUser.is_away = false;
+    }
   };
 
   originalAppendChatBox = TChat.AppendChatBox;
@@ -110,6 +130,10 @@ initOrganicmath = function() {
     } else {
       user_div.style.backgroundColor = '';
     }
+
+    if (user.is_away) {
+      user_div.appendChild(document.createTextNode(' (away)'));
+    }
   };
 
 /* #FastSave
@@ -144,5 +168,15 @@ startTyping = function(user) {
 
 stopTyping = function(user) {
   user.is_typing = false;
+  RefreshUsers();
+};
+
+away = function(user) {
+  user.is_away = true;
+  RefreshUsers();
+};
+
+back = function(user) {
+  user.is_away = false;
   RefreshUsers();
 };
