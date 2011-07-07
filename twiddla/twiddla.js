@@ -136,9 +136,9 @@ initOrganicmath = function() {
     }
   };
 
-/* #FastSave
+/*
   document.getElementById('framePop').contentWindow.location 
-    = '/AddIns/SnapshotPanel.aspx?sessionID=565705';
+    = '/AddIns/SnapshotPanel.aspx?sessionID=' + sessionID;
   upload_callback = function() {};
   openPop = function() {
     document.getElementById('framePop').contentWindow.document
