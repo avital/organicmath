@@ -42,21 +42,24 @@ initOrganicmath = function() {
 
   sendSideband = function(type) {
     if (type === 'away') {
-      setTimeout(function() {
-        sendMessage('@@away');
-      }, 200); // To allow you to move the mouse a little right after the click
+      sendMessage('@@away');
     }
     else {
       sendMessage(':: ' + type + ' ::');
     }
   };
 
-  document.onmousemove = function() {
+  setBack = function() {
     if (TChat.currentUser.is_away) {
       sendMessage('@@back');
       TChat.currentUser.is_away = false;
     }
   };
+
+  document.onmousedown = setBack;
+  document.onkeydown = setBack;
+  document.getElementById('frameSubject').contentWindow.document.onmousedown = setBack;
+  document.getElementById('frameSubject').contentWindow.document.getElementById('slideCover').ondragstart = function() {};
 
   originalAppendChatBox = TChat.AppendChatBox;
   TChat.AppendChatBox =
