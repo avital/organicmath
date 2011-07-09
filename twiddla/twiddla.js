@@ -58,8 +58,13 @@ initOrganicmath = function() {
 
   document.onmousedown = setBack;
   document.onkeydown = setBack;
+  document.onmouseup = setBack;
+  document.getElementById('frameSubject').contentWindow.document.onmouseup = setBack;
+  document.getElementById('frameSubject').contentWindow.document.ondragend = setBack;
+  document.getElementById('frameSubject').contentWindow.document.ondragstart = setBack;
   document.getElementById('frameSubject').contentWindow.document.onmousedown = setBack;
   document.getElementById('frameSubject').contentWindow.document.getElementById('slideCover').ondragstart = function() {};
+  document.getElementById('frameSubject').contentWindow.document.getElementById('slideCover').onmouseup = setBack;
 
   originalAppendChatBox = TChat.AppendChatBox;
   TChat.AppendChatBox =
